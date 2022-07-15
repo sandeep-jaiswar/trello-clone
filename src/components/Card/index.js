@@ -15,7 +15,8 @@ export default function Card({ card }) {
     if (cards.length > 1) dispatch(deletecard(id))
   }
 
-  const addTaskhandler = () => {
+	const addTaskhandler = () => {
+		if ( !ref.current.value ) return;
     dispatch(addTask({ title: ref.current.value, cid: id }))
     ref.current.value = ""
   }
@@ -42,7 +43,7 @@ export default function Card({ card }) {
   return (
     <div className="card" draggable onDragOver={onDragOver} onDrop={onDrop}>
       <div className="card-header">
-        <h3 className="card-title">{title}</h3>
+        <div className="card-title">{title}</div>
       </div>
       <div className="card-body">
         {card.tasks.map((task) => (
@@ -51,12 +52,12 @@ export default function Card({ card }) {
       </div>
       <div className="card-footer">
         <div className="addtask-container">
-          <input type="text" className="addtask-input" ref={ref} />
-          <button className="addtask-btn" onClick={addTaskhandler}>
-            +
-          </button>
+          <input type="text" className="addtask-input" placeholder="Add Task" ref={ref} />
+          <span className="addtask-btn" onClick={addTaskhandler}>
+            <img src="add.svg" height={'10px'}  alt="add" />
+          </span>
         </div>
-        <button className="card-delete" onClick={deleteCardHandler}>
+        <button className="card-delete-btn" onClick={deleteCardHandler}>
           Delete
         </button>
       </div>

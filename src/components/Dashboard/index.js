@@ -17,16 +17,20 @@ export default function Dashboard() {
         {cards.map((card) => (
           <Card key={card.id} card={card} />
         ))}
-        <button className="add-card-btn" onClick={addCardsHandler}>
-          Add Card
-        </button>
+        <div className="bottom">
+          <div className="add-card-btn" onClick={addCardsHandler}>
+            <img src="add.svg" height={"14px"} alt="add" />
+          </div>
+        </div>
       </div>
     )
 	}
 	return (
     <div className="dashboard">
-      <Header />
-      {getCardsHtml(cards)}
+			<Header />
+			<div className="dashboard-body">
+				{getCardsHtml( cards )}
+				</div>
     </div>
   )
 }

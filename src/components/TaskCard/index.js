@@ -8,40 +8,26 @@ export default function TaskCard({ task }) {
 	const dispatch = useDispatch();
 	const [isEditing, setIsEditing] = useState( false )
 	const ref = useRef();
-	const targetNode = useRef();
-	const itemNode = useRef();
   const edithandler = () => {
     setIsEditing(true)
 	}
-	const savehandler = (e) => {
+	const savehandler = () => {
     dispatch(updateTask({ id, title: ref.current, cid }))
     setIsEditing(false)
 	}
 	
 	const onDragStart = ( e, task ) => {
-		itemNode.current = e.target;
-		console.log( "drag start", itemNode.current )
 		e.dataTransfer.setData( "id", task.id )
 		e.dataTransfer.setData( "cid", task.cid )
 		e.dataTransfer.setData("title", task.title)
-		//console.log('e.target', e.target)
 	}
 
-	const onDragEnter = ( e,task ) => {
-		targetNode.current = e.target
-		console.log("drag enter", targetNode.current)
-	}
 
 	const onDragEnd = ( e ,i ) => {
 		console.log( "drag end",i)
 	//	console.log("e.target", e.target)
 	}
 
-	const onDragOver = ( e ) => {
-		console.log( "drag over", e )
-		e.preventDefault()
-		// console.log("e.target", e.target)
-	}
 
 	const onChange = ( e ) => {
 		ref.current = e.currentTarget.textContent;
@@ -56,10 +42,6 @@ export default function TaskCard({ task }) {
       onDrop={onDragEnd}
       className="taskcard"
       onDragStart={(e) => onDragStart(e, task)}
-      // onDrop={onDragEnd}
-      // onDragOver={onDragOver}
-      // onDragEnd={onDragEnd}
-      // onDragEnter={onDragEnter}
       id={id}
     >
       <div className="title" onInput={onChange} contentEditable={isEditing}>
@@ -67,17 +49,17 @@ export default function TaskCard({ task }) {
       </div>
       <div className="action-btn">
         {!isEditing ? (
-          <button className="edit-btn" onClick={edithandler}>
-            Edit
-          </button>
+          <div className="edit-btn" onClick={edithandler}>
+            <img src="edit.svg" height={"10px"} alt="edit" />
+          </div>
         ) : (
-          <button className="save-btn" onClick={(e) => savehandler(e)}>
-            Save
-          </button>
+          <div className="save-btn" onClick={(e) => savehandler(e)}>
+            <img src="save.svg" height={"10px"} alt="save" />
+          </div>
         )}
-        <button className="delete-btn" onClick={deleteHandler}>
-          Delete
-        </button>
+        <div className="delete-btn" onClick={deleteHandler}>
+          <img src="delete.svg" height={"10px"} alt="add" />
+        </div>
       </div>
     </div>
   )

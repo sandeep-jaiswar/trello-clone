@@ -1,6 +1,38 @@
-.dashboard{
-	.card-deck{
-		display: flex;
-		flex-wrap: wrap;
-	}
+.dashboard {
+  .card-deck {
+    display: grid;
+		grid-template-columns: repeat(4,1fr);
+		gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .bottom {
+    display: flex;
+    min-height: 30vh;
+    min-width: 30vh;
+		justify-content: center;
+		align-items: center;
+  }
+  .dashboard-body {
+    background-color: #123753;
+    min-height: calc(94vh - 2rem);
+    padding: 1rem;
+  }
+
+  .add-card-btn {
+    background-color: #05b4ee;
+    box-sizing: border-box;
+    display: grid;
+    place-content: center;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    color: white;
+    padding: 20px;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+  }
 }

@@ -1,7 +1,49 @@
-.header{
-	display: flex;
-	padding: 0.5rem;
-	background-color: aqua;
-	justify-content: space-between;
-	align-items: center;
+.header {
+  background-color: #05b4ee;
+  height: 6vh;
+  .content {
+		height: 100%;
+    display: flex;
+    margin: 0 1rem;
+    justify-content: space-between;
+    align-items: center;
+		.header-title{
+			font-weight: 800;
+			font-size: 1.2rem;
+		}
+    .signout-btn {
+			background-color:#05b4ee;
+			border: 2px solid #0f1111;
+			box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
+			box-sizing: border-box;
+			color: #0f1111;
+			cursor: pointer;
+			display: inline-block;
+			font-family: "Amazon Ember", sans-serif;
+			font-size: 13px;
+			line-height: 20px;
+			padding: 0 10px 0 11px;
+			position: relative;
+			text-align: center;
+			text-decoration: none;
+			user-select: none;
+			-webkit-user-select: none;
+			touch-action: manipulation;
+			vertical-align: middle;
+			border-radius: 4px;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			-ms-border-radius: 4px;
+			-o-border-radius: 4px;
+			:hover{
+				background-color: #fff;
+				border: 1px solid #05b4ee;
+			}
+      :focus {
+        border-color: #008296;
+        box-shadow: rgba(213, 217, 217, 0.5) 0 2px 5px 0;
+        outline: 0;
+      }
+    }
+  }
 }
