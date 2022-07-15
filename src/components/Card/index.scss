@@ -1,0 +1,20 @@
+.card {
+  display: flex;
+  height: 400px;
+  width: 300px;
+  background-color: #bbb;
+  margin: 1rem;
+	flex-direction: column;
+	justify-content: space-between;
+  .card-header {
+    width: 100%;
+    .card-title {
+      text-align: center;
+    }
+  }
+	.card-footer{
+		width: 100%;
+		display: grid;
+		place-content: center;
+	}
+}
