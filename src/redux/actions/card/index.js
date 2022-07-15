@@ -15,3 +15,13 @@ export const deletecard = ( id ) => {
 		payload: id
 	}
 }
+
+export const updateCard = ({ id, title} ) => {
+	return {
+		type: 'UPDATE_CARD',
+		payload: {
+			id,
+			title
+		}
+	}
+}

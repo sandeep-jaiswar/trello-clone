@@ -2,7 +2,7 @@ const initialStore = {
   cards: [
     {
       id: Date.now(),
-      title: "Card 1",
+      title: "Add Title",
       tasks: [],
     },
   ],
@@ -71,6 +71,19 @@ function cardReducer(state = initialStore, action) {
                 }
                 return task
               }),
+            }
+          }
+          return card
+        }),
+      }
+    case "UPDATE_CARD":
+      return {
+        ...state,
+        cards: state.cards.map((card) => {
+          if (card.id === action.payload.id) {
+            return {
+              ...card,
+              title: action.payload.title,
             }
           }
           return card

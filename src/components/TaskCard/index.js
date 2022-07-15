@@ -44,7 +44,12 @@ export default function TaskCard({ task }) {
       onDragStart={(e) => onDragStart(e, task)}
       id={id}
     >
-      <div className="title" onInput={onChange} contentEditable={isEditing}>
+      <div
+        className="title"
+        onInput={onChange}
+        suppressContentEditableWarning="true"
+        contentEditable={isEditing}
+      >
         {title}
       </div>
       <div className="action-btn">

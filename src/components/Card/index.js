@@ -1,12 +1,13 @@
 import "./index.scss"
 import { useDispatch, useSelector } from "react-redux"
-import { deletecard } from "../../redux/actions/card"
+import { deletecard, updateCard } from "../../redux/actions/card"
 import { addTask, dragTask } from "../../redux/actions/task"
 import { useRef } from "react"
 import TaskCard from "../TaskCard"
 
 export default function Card({ card }) {
   const ref = useRef()
+  const titleRef = useRef()
   const { title, id } = card
   const dispatch = useDispatch()
   const cards = useSelector((state) => state.card.cards)
@@ -15,8 +16,8 @@ export default function Card({ card }) {
     if (cards.length > 1) dispatch(deletecard(id))
   }
 
-	const addTaskhandler = () => {
-		if ( !ref.current.value ) return;
+  const addTaskhandler = () => {
+    if (!ref.current.value) return
     dispatch(addTask({ title: ref.current.value, cid: id }))
     ref.current.value = ""
   }
@@ -30,20 +31,46 @@ export default function Card({ card }) {
     console.log("drop", e, id)
     console.log("card", e.dataTransfer.getData("cid"))
     console.log("item", e.dataTransfer.getData("id"))
+    if (id === Number(e.dataTransfer.getData("cid"))) {
+      return
+    }
     dispatch(
       dragTask({
         taskId: Number(e.dataTransfer.getData("id")),
-        startCardId:Number( e.dataTransfer.getData("cid")),
+        startCardId: Number(e.dataTransfer.getData("cid")),
         title: e.dataTransfer.getData("title"),
         endCardId: id,
       })
     )
   }
 
+  const onInput = (e) => {
+    titleRef.current = e.currentTarget.textContent
+  }
+	
+	const onBlur = ( e ) => {
+		if(titleRef.current === title) return
+		dispatch( updateCard( { id, title: titleRef.current } ) )
+	}
+
   return (
-    <div className="card" draggable onDragOver={onDragOver} onDrop={onDrop}>
+    <div
+      className="card"
+      draggable
+      onBlur={onBlur}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+    >
       <div className="card-header">
-        <div className="card-title">{title}</div>
+        <div
+          className="card-title"
+          suppressContentEditableWarning="true"
+          contentEditable="true"
+          onInput={onInput}
+          id="card-title"
+        >
+          {title}
+        </div>
       </div>
       <div className="card-body">
         {card.tasks.map((task) => (
@@ -52,9 +79,14 @@ export default function Card({ card }) {
       </div>
       <div className="card-footer">
         <div className="addtask-container">
-          <input type="text" className="addtask-input" placeholder="Add Task" ref={ref} />
+          <input
+            type="text"
+            className="addtask-input"
+            placeholder="Add Task"
+            ref={ref}
+          />
           <span className="addtask-btn" onClick={addTaskhandler}>
-            <img src="add.svg" height={'10px'}  alt="add" />
+            <img src="add.svg" height={"10px"} alt="add" />
           </span>
         </div>
         <button className="card-delete-btn" onClick={deleteCardHandler}>
