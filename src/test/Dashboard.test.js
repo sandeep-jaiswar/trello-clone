@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react"
-import App from "../App"
 import { Provider } from "react-redux"
 import { createStore } from "redux"
 import rootReducer from "../redux/reducers"
+import Dashboard from "../components/Dashboard"
 const init = () => {
   cards: [
     {
@@ -15,14 +15,12 @@ const init = () => {
 
 const store = createStore(rootReducer, init())
 
-describe("testing app.js", () => {
+describe("testing taskcard.js", () => {
   test("renders body", () => {
-   render(
+    render(
       <Provider store={store}>
-        <App />
+        <Dashboard />
       </Provider>
     )
-    const el = screen.getByText("Trello-Clone")
-    expect(el).toBeInTheDocument()
   })
 })

@@ -6,9 +6,9 @@ import { memo, useRef } from "react"
 import TaskCard from "../TaskCard"
 
 function Card({ card, totalCards }) {
-  const ref = useRef()
-  const titleRef = useRef()
-  const { title, id } = card
+	const ref = useRef()
+	  const { title, id } = card
+  const titleRef = useRef(title)
   const dispatch = useDispatch()
   const deleteCardHandler = () => {
     if (totalCards > 1) dispatch(deletecard(id))
@@ -21,25 +21,26 @@ function Card({ card, totalCards }) {
   }
 
   const onDragOver = (e) => {
-    console.log("drag over", e)
     e.preventDefault()
   }
 
   const onDrop = (e) => {
-    console.log("drop", e, id)
-    console.log("card", e.dataTransfer.getData("cid"))
-    console.log("item", e.dataTransfer.getData("id"))
-    if (id === Number(e.dataTransfer.getData("cid"))) {
-      return
+    // console.log("drop", e, id)
+    // console.log("card", e.dataTransfer.getData("cid"))
+    // console.log("item", e.dataTransfer.getData("id"))
+		if ( e?.dataTransfer?.getData) {
+			if (id === Number(e.dataTransfer.getData("cid"))) {
+        return
+      }
+      dispatch(
+        dragTask({
+          taskId: Number(e.dataTransfer.getData("id")),
+          startCardId: Number(e.dataTransfer.getData("cid")),
+          title: e.dataTransfer.getData("title"),
+          endCardId: id,
+        })
+      )
     }
-    dispatch(
-      dragTask({
-        taskId: Number(e.dataTransfer.getData("id")),
-        startCardId: Number(e.dataTransfer.getData("cid")),
-        title: e.dataTransfer.getData("title"),
-        endCardId: id,
-      })
-    )
   }
 
   const onInput = (e) => {
@@ -52,20 +53,15 @@ function Card({ card, totalCards }) {
 	}
 
   return (
-    <div
-      className="card"
-      draggable
-      onBlur={onBlur}
-      onDragOver={onDragOver}
-      onDrop={onDrop}
-    >
+    <div className="card" draggable onDragOver={onDragOver} onDrop={onDrop}>
       <div className="card-header">
         <div
           className="card-title"
           suppressContentEditableWarning="true"
           contentEditable="true"
           onInput={onInput}
-          id="card-title"
+          data-testid="card-title"
+          onBlur={onBlur}
         >
           {title}
         </div>
@@ -79,6 +75,7 @@ function Card({ card, totalCards }) {
         <div className="addtask-container">
           <input
             type="text"
+            data-testid="add-task-input"
             className="addtask-input"
             placeholder="Add Task"
             ref={ref}
@@ -87,7 +84,11 @@ function Card({ card, totalCards }) {
             <img src="add.svg" height={"10px"} alt="add" />
           </span>
         </div>
-        <button className="card-delete-btn" onClick={deleteCardHandler}>
+        <button
+          className="card-delete-btn"
+          data-testid="delete-card"
+          onClick={deleteCardHandler}
+        >
           Delete
         </button>
       </div>

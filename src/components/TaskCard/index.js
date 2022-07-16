@@ -7,7 +7,7 @@ export default function TaskCard({ task }) {
 	const { id, title, cid } = task;
 	const dispatch = useDispatch();
 	const [isEditing, setIsEditing] = useState( false )
-	const ref = useRef();
+	const ref = useRef(title);
   const edithandler = () => {
     setIsEditing(true)
 	}
@@ -17,17 +17,12 @@ export default function TaskCard({ task }) {
 	}
 	
 	const onDragStart = ( e, task ) => {
-		e.dataTransfer.setData( "id", task.id )
-		e.dataTransfer.setData( "cid", task.cid )
-		e.dataTransfer.setData("title", task.title)
+		if (e?.dataTransfer?.setData) {
+      e.dataTransfer.setData("id", task.id)
+      e.dataTransfer.setData("cid", task.cid)
+      e.dataTransfer.setData("title", task.title)
+    }
 	}
-
-
-	const onDragEnd = ( e ,i ) => {
-		console.log( "drag end",i)
-	//	console.log("e.target", e.target)
-	}
-
 
 	const onChange = ( e ) => {
 		ref.current = e.currentTarget.textContent;
@@ -39,7 +34,6 @@ export default function TaskCard({ task }) {
   return (
     <div
       draggable="true"
-      onDrop={onDragEnd}
       className="taskcard"
       onDragStart={(e) => onDragStart(e, task)}
       id={id}
@@ -49,20 +43,33 @@ export default function TaskCard({ task }) {
         onInput={onChange}
         suppressContentEditableWarning="true"
         contentEditable={isEditing}
+        data-testid="task-title"
       >
         {title}
       </div>
       <div className="action-btn">
         {!isEditing ? (
-          <div className="edit-btn" onClick={edithandler}>
+          <div
+            className="edit-btn"
+            data-testid="task-title-edit"
+            onClick={edithandler}
+          >
             <img src="edit.svg" height={"10px"} alt="edit" />
           </div>
         ) : (
-          <div className="save-btn" onClick={(e) => savehandler(e)}>
+          <div
+            className="save-btn"
+            data-testid="task-title-save"
+            onClick={(e) => savehandler(e)}
+          >
             <img src="save.svg" height={"10px"} alt="save" />
           </div>
         )}
-        <div className="delete-btn" onClick={deleteHandler}>
+        <div
+          className="delete-btn"
+          data-testid="task-title-delete"
+          onClick={deleteHandler}
+        >
           <img src="delete.svg" height={"10px"} alt="add" />
         </div>
       </div>

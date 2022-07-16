@@ -2,7 +2,7 @@ export const addTask = ( task ) => {
 	return {
 		type: 'ADD_TASK',
 		payload: {
-			id: Date.now(),
+			id: task.id || Date.now(),
 			title: task.title,
 			cid: task.cid
 		}
