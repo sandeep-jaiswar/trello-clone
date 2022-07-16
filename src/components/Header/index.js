@@ -1,6 +1,7 @@
+import { memo } from 'react'
 import './index.scss'
 
-export default function Header( props ) {
+function Header( props ) {
 	return (
     <div className="header">
       <div className="content">
@@ -12,3 +13,5 @@ export default function Header( props ) {
     </div>
   )
 }
+
+export default memo( Header )

@@ -2,7 +2,7 @@ export const addCard = ( ) => {
 	return {
 		type: 'ADD_CARD',
 		payload: {
-			title : "New Card",
+			title : "Add Title",
 			tasks : [],
 			id: Date.now()
 		}

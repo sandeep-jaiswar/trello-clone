@@ -2,18 +2,16 @@ import "./index.scss"
 import { useDispatch, useSelector } from "react-redux"
 import { deletecard, updateCard } from "../../redux/actions/card"
 import { addTask, dragTask } from "../../redux/actions/task"
-import { useRef } from "react"
+import { memo, useRef } from "react"
 import TaskCard from "../TaskCard"
 
-export default function Card({ card }) {
+function Card({ card, totalCards }) {
   const ref = useRef()
   const titleRef = useRef()
   const { title, id } = card
   const dispatch = useDispatch()
-  const cards = useSelector((state) => state.card.cards)
   const deleteCardHandler = () => {
-    console.log("cards", cards)
-    if (cards.length > 1) dispatch(deletecard(id))
+    if (totalCards > 1) dispatch(deletecard(id))
   }
 
   const addTaskhandler = () => {
@@ -96,3 +94,5 @@ export default function Card({ card }) {
     </div>
   )
 }
+
+export default memo(Card)
